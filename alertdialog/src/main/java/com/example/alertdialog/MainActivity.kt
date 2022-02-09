@@ -1,15 +1,12 @@
 package com.example.alertdialog
 
 import android.app.AlertDialog
-import android.app.Dialog
 import android.content.DialogInterface
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.SystemClock
 import android.util.Log
 import android.view.KeyEvent
 import android.widget.Toast
-import androidx.appcompat.widget.AlertDialogLayout
+import androidx.appcompat.app.AppCompatActivity
 import com.example.alertdialog.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -18,7 +15,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var binding:ActivityMainBinding
 
-    val items = arrayOf<String>("사과", "배", "복숭아", "바나나", "딸기")
+    val items = arrayOf<String>("apple", "banana", "peach", "lemon", "orange")
 
     val eventHandler = object: DialogInterface.OnClickListener{
         override fun onClick(p0: DialogInterface?, p1: Int) {
@@ -72,6 +69,7 @@ class MainActivity : AppCompatActivity() {
             createRadioButton()
         }
 
+
         setContentView(binding.root)
     }
 
@@ -80,7 +78,7 @@ class MainActivity : AppCompatActivity() {
             setTitle("test dialog")
             setIcon(android.R.drawable.ic_dialog_info)
             setMessage("test message")
-            setPositiveButton("OK", eventHandler)
+            setPositiveButton("YES", eventHandler)
             setNegativeButton("NO", eventHandler)
             setNeutralButton("MORE", eventHandler)
             show()
@@ -88,13 +86,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun createItemDialog(){
-        AlertDialog.Builder(this).run{
-            setTitle("item dialog")
+        AlertDialog.Builder(this).run {
+            setTitle("items test")
             setIcon(android.R.drawable.ic_dialog_info)
-            setItems(items, itemEventHandler)
-            setPositiveButton("OK", eventHandler)
-            setNegativeButton("NO", eventHandler)
-            setNeutralButton("MORE", eventHandler)
+            setItems(items, object: DialogInterface.OnClickListener {
+                override fun onClick(p0: DialogInterface?, p1: Int) {
+                    Log.d("ohsopp", "Selected fruit : ${items[p1]}")
+                }
+            })
+            setPositiveButton("OK", null)
             show()
         }
     }
@@ -103,10 +103,13 @@ class MainActivity : AppCompatActivity() {
         AlertDialog.Builder(this).run{
             setTitle("checkbox dialog")
             setIcon(android.R.drawable.ic_dialog_info)
-            setMultiChoiceItems(items, booleanArrayOf(true, false, false, true, false),multiEventHandler)
+            setMultiChoiceItems(items, booleanArrayOf(true, false, true, true, false), object: DialogInterface.OnMultiChoiceClickListener {
+                override fun onClick(p0: DialogInterface?, p1: Int, p2: Boolean) {
+                    Log.d("ohsopp", "${items[p1]} is ${if(p2) "selected" else "released"}")
+                }
+            })
             setPositiveButton("OK", eventHandler)
-            setNegativeButton("NO", eventHandler)
-            setNeutralButton("MORE", eventHandler)
+
             show()
         }
     }
@@ -115,7 +118,11 @@ class MainActivity : AppCompatActivity() {
         AlertDialog.Builder(this).run{
             setTitle("radio dialog")
             setIcon(android.R.drawable.ic_dialog_info)
-            setSingleChoiceItems(items, 1, singleEventHandler)
+            setSingleChoiceItems(items, 2, object: DialogInterface.OnClickListener {
+                override fun onClick(p0: DialogInterface?, p1: Int) {
+                    Log.d("ohsopp", "${items[p1]} is selected")
+                }
+            })
             setPositiveButton("OK", eventHandler)
             setNegativeButton("NO", eventHandler)
             setNeutralButton("MORE", eventHandler)
