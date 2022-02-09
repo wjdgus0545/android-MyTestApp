@@ -16,4 +16,16 @@
         android:layout_height="wrap_content"
         android:text="@string/show_item_dialog" />
 
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/show_checkbox" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/show_radio" />
+
 </LinearLayout>

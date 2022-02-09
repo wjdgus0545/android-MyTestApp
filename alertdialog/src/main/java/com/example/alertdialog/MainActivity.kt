@@ -9,6 +9,7 @@ import android.os.SystemClock
 import android.util.Log
 import android.view.KeyEvent
 import android.widget.Toast
+import androidx.appcompat.widget.AlertDialogLayout
 import com.example.alertdialog.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -17,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var binding:ActivityMainBinding
 
-    val items = arrayOf<String>("사과", "배", "수박", "딸기", "복숭아")
+    val items = arrayOf<String>("사과", "배", "복숭아", "바나나", "딸기")
 
     val eventHandler = object: DialogInterface.OnClickListener{
         override fun onClick(p0: DialogInterface?, p1: Int) {
@@ -28,14 +29,26 @@ class MainActivity : AppCompatActivity() {
                 Log.d("ohsopp", "NO Button")
             }
             else if(p1 == DialogInterface.BUTTON_NEUTRAL){
-                Log.d("ohsopp", "MORE Button")
+                Log.d("ohspop", "MORE Button")
             }
         }
     }
 
-    val itemEventHandler = object:DialogInterface.OnClickListener{
+    val itemEventHandler = object: DialogInterface.OnClickListener{
         override fun onClick(p0: DialogInterface?, p1: Int) {
             Log.d("ohsopp", "선택한 과일 : ${items[p1]}")
+        }
+    }
+
+    val multiEventHandler = object: DialogInterface.OnMultiChoiceClickListener{
+        override fun onClick(p0: DialogInterface?, p1: Int, p2: Boolean) {
+            Log.d("ohsopp", "${items[p1]}가(이) ${if(p2) "선택되었습니다." else "선택 해제되었습니다."}")
+        }
+    }
+
+    val singleEventHandler = object: DialogInterface.OnClickListener{
+        override fun onClick(p0: DialogInterface?, p1: Int) {
+            Log.d("ohsopp", "${items[p1]}가 선택되었습니다.")
         }
     }
 
@@ -43,17 +56,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
 
-
         binding.button.setOnClickListener {
             createDialog()
         }
+
         binding.button2.setOnClickListener {
             createItemDialog()
         }
 
-        createDialog()
+        binding.button3.setOnClickListener {
+            createCheckBox()
+        }
 
-
+        binding.button4.setOnClickListener {
+            createRadioButton()
+        }
 
         setContentView(binding.root)
     }
@@ -62,7 +79,7 @@ class MainActivity : AppCompatActivity() {
         AlertDialog.Builder(this).run{
             setTitle("test dialog")
             setIcon(android.R.drawable.ic_dialog_info)
-            setMessage("정말 종료하시겠습니까?")
+            setMessage("test message")
             setPositiveButton("OK", eventHandler)
             setNegativeButton("NO", eventHandler)
             setNeutralButton("MORE", eventHandler)
@@ -82,7 +99,32 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun createCheckBox(){
+        AlertDialog.Builder(this).run{
+            setTitle("checkbox dialog")
+            setIcon(android.R.drawable.ic_dialog_info)
+            setMultiChoiceItems(items, booleanArrayOf(true, false, false, true, false),multiEventHandler)
+            setPositiveButton("OK", eventHandler)
+            setNegativeButton("NO", eventHandler)
+            setNeutralButton("MORE", eventHandler)
+            show()
+        }
+    }
+
+    fun createRadioButton(){
+        AlertDialog.Builder(this).run{
+            setTitle("radio dialog")
+            setIcon(android.R.drawable.ic_dialog_info)
+            setSingleChoiceItems(items, 1, singleEventHandler)
+            setPositiveButton("OK", eventHandler)
+            setNegativeButton("NO", eventHandler)
+            setNeutralButton("MORE", eventHandler)
+            show()
+        }
+    }
+
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+
         if(keyCode == KeyEvent.KEYCODE_BACK){
             if(System.currentTimeMillis() - initTime > 3000){
                 Toast.makeText(applicationContext, "종료하려면 한 번 더 누르세요", Toast.LENGTH_SHORT).show()

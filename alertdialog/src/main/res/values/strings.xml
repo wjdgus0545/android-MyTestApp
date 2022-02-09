@@ -2,4 +2,6 @@
     <string name="app_name">MyAlertDialog</string>
     <string name="show_dialog">Show Dialog</string>
     <string name="show_item_dialog">Show Item</string>
+    <string name="show_checkbox">Show CheckBox</string>
+    <string name="show_radio">Show RadioButton</string>
 </resources>
