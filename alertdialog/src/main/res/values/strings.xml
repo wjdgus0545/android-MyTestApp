@@ -4,4 +4,8 @@
     <string name="show_item_dialog">Show Items</string>
     <string name="show_checkbox">Show CheckBox</string>
     <string name="show_radio">Show Radio Button</string>
+    <string name="show_custom_dialog">Show Custom Dialog</string>
+    <string name="notification">Play Notification</string>
+    <string name="sound">Play Sound</string>
+    <string name="vibrate">Play Vibrator</string>
 </resources>

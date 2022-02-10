@@ -9,3 +9,5 @@ dependencyResolutionManagement {
 rootProject.name = "MyTestApp"
 include ':app'
 include ':alertdialog'
+include ':alertdialog:test2'
+include ':mytest3'

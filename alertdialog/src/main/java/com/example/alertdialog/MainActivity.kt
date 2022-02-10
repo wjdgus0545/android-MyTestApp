@@ -1,13 +1,23 @@
 package com.example.alertdialog
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.DialogInterface
+import android.media.MediaPlayer
+import android.media.RingtoneManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.util.Log
 import android.view.KeyEvent
+import android.view.LayoutInflater
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.alertdialog.databinding.ActivityMainBinding
+import com.example.alertdialog.databinding.DialogInputBinding
 
 class MainActivity : AppCompatActivity() {
 
@@ -49,9 +59,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+
 
         binding.button.setOnClickListener {
             createDialog()
@@ -69,6 +82,28 @@ class MainActivity : AppCompatActivity() {
             createRadioButton()
         }
 
+        binding.button5.setOnClickListener {
+            createCustomDialog()
+        }
+        val notification: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+        val ringtone = RingtoneManager.getRingtone(applicationContext, notification)
+
+        binding.button6.setOnClickListener {
+
+            ringtone.play()
+
+        }
+
+        val player: MediaPlayer = MediaPlayer.create(this, R.raw.wineglassshatter)
+        binding.button7.setOnClickListener {
+            player.start()
+        }
+
+        val vibrator = getSystemService(VIBRATOR_SERVICE) as Vibrator
+
+        binding.button8.setOnClickListener {
+            vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE))
+        }
 
         setContentView(binding.root)
     }
@@ -126,6 +161,19 @@ class MainActivity : AppCompatActivity() {
             setPositiveButton("OK", eventHandler)
             setNegativeButton("NO", eventHandler)
             setNeutralButton("MORE", eventHandler)
+            show()
+        }
+    }
+
+    fun createCustomDialog(){
+        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val rootView = inflater.inflate(R.layout.dialog_input, null)
+        val dialogBinding = DialogInputBinding.inflate(layoutInflater)
+
+        AlertDialog.Builder(this).run{
+            setTitle("Custom Dialog")
+            setView(rootView)
+            setPositiveButton("닫기", null)
             show()
         }
     }
