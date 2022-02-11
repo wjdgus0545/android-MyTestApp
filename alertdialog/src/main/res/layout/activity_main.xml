@@ -51,4 +51,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/vibrate" />
+
+    <Button
+        android:id="@+id/button9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My sound button"
+        android:layout_marginTop="30dp" />
+
+    <Button
+        android:id="@+id/button10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Notification" />
+
+    <Button
+        android:id="@+id/button11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="my notification" />
 </LinearLayout>

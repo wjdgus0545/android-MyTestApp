@@ -1,21 +1,23 @@
 package com.example.alertdialog
 
 import android.app.AlertDialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.DialogInterface
+import android.graphics.Color
+import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.media.RingtoneManager
 import android.net.Uri
-import android.os.Build
-import android.os.Bundle
-import android.os.VibrationEffect
-import android.os.Vibrator
+import android.os.*
 import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
 import com.example.alertdialog.databinding.ActivityMainBinding
 import com.example.alertdialog.databinding.DialogInputBinding
 
@@ -85,6 +87,7 @@ class MainActivity : AppCompatActivity() {
         binding.button5.setOnClickListener {
             createCustomDialog()
         }
+
         val notification: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val ringtone = RingtoneManager.getRingtone(applicationContext, notification)
 
@@ -104,6 +107,106 @@ class MainActivity : AppCompatActivity() {
         binding.button8.setOnClickListener {
             vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE))
         }
+
+        val notification2:Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+        val ringtone2 = RingtoneManager.getRingtone(applicationContext, notification2)
+
+        val player2 = MediaPlayer.create(this, R.raw.wineglassshatter)
+        binding.button9.setOnClickListener {
+            player2.start()
+        }
+
+        // NotificationManager, Builder 객체 변수 선언
+        val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        val builder: NotificationCompat.Builder
+
+        // 알림 빌더 설정
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { // 오레오 버전 이상일 때 채널 필요
+            val channelId = "one-channel"
+            val channelName = "My Channel One"
+            val channel = NotificationChannel(
+                channelId,
+                channelName,
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply{
+                description = "My Channel One Description"
+            }
+
+            // channel.description = "My Channel One Description" 위 apply문과 동일
+            channel.setShowBadge(true)
+            val uri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+            val audioAttributes = AudioAttributes.Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .setUsage(AudioAttributes.USAGE_ALARM)
+                .build()
+            channel.setSound(uri, audioAttributes)
+            channel.enableLights(true)
+            channel.lightColor = Color.RED
+            channel.enableVibration(true)
+            channel.vibrationPattern = longArrayOf(100, 200, 100, 200)
+
+            manager.createNotificationChannel(channel)
+
+            builder = NotificationCompat.Builder(this, channelId)
+        } else { // 오레오 버전 미만일 때는 채널 지원하지 않음
+            builder = NotificationCompat.Builder(this)
+        }
+
+
+        builder.setSmallIcon(android.R.drawable.ic_notification_overlay)
+        builder.setWhen(System.currentTimeMillis())
+        builder.setContentTitle("Content Title")
+        builder.setContentText("Content Massgae")
+
+
+        binding.button10.setOnClickListener {
+
+            // 알림 표시
+            manager.notify(11, builder.build())
+        }
+
+        val manager2 = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        val builder2: NotificationCompat.Builder
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val channelId = "two-channel"
+            val channelName = "My second channel"
+            val channel = NotificationChannel(
+                channelId,
+                channelName,
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply{
+                description = "My second channel description"
+            }
+
+            channel.setShowBadge(true)
+
+            val uri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+            val audioAttributes = AudioAttributes.Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .setUsage(AudioAttributes.USAGE_ALARM)
+                .build()
+
+            channel.setSound(uri, audioAttributes)
+            channel.vibrationPattern = longArrayOf(100, 200, 50, 100)
+
+            manager2.createNotificationChannel(channel)
+
+            builder2 = NotificationCompat.Builder(this, channelId)
+
+        } else {
+            builder2 = NotificationCompat.Builder(this)
+        }
+
+        builder2.setSmallIcon(android.R.drawable.ic_dialog_email)
+        builder2.setWhen(System.currentTimeMillis())
+        builder2.setContentTitle("My notification")
+        builder2.setContentText("I made it!")
+
+        binding.button11.setOnClickListener {
+            manager2.notify(12, builder2.build())
+        }
+
 
         setContentView(binding.root)
     }
