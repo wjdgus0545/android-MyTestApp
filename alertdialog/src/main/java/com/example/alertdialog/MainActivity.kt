@@ -3,8 +3,11 @@ package com.example.alertdialog
 import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.media.AudioAttributes
 import android.media.MediaPlayer
@@ -18,8 +21,10 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import androidx.core.app.RemoteInput
 import com.example.alertdialog.databinding.ActivityMainBinding
 import com.example.alertdialog.databinding.DialogInputBinding
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
@@ -116,95 +121,83 @@ class MainActivity : AppCompatActivity() {
             player2.start()
         }
 
-        // NotificationManager, Builder 객체 변수 선언
+
+        // 알림 빌더 설정
+
         val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         val builder: NotificationCompat.Builder
 
-        // 알림 빌더 설정
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { // 오레오 버전 이상일 때 채널 필요
-            val channelId = "one-channel"
-            val channelName = "My Channel One"
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+
+            val channelId = "ohsopp channel"
+            val channelName = "ohsopp notification"
             val channel = NotificationChannel(
                 channelId,
                 channelName,
                 NotificationManager.IMPORTANCE_HIGH
             ).apply{
-                description = "My Channel One Description"
+                description = "오습의 알림 채널입니다."
             }
-
-            // channel.description = "My Channel One Description" 위 apply문과 동일
-            channel.setShowBadge(true)
-            val uri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-            val audioAttributes = AudioAttributes.Builder()
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .setUsage(AudioAttributes.USAGE_ALARM)
-                .build()
-            channel.setSound(uri, audioAttributes)
-            channel.enableLights(true)
-            channel.lightColor = Color.RED
-            channel.enableVibration(true)
-            channel.vibrationPattern = longArrayOf(100, 200, 100, 200)
 
             manager.createNotificationChannel(channel)
 
             builder = NotificationCompat.Builder(this, channelId)
-        } else { // 오레오 버전 미만일 때는 채널 지원하지 않음
+        } else {
             builder = NotificationCompat.Builder(this)
         }
 
 
-        builder.setSmallIcon(android.R.drawable.ic_notification_overlay)
+        builder.setContentTitle("Test title")
+        builder.setContentText("Test text")
+        builder.setSmallIcon(android.R.drawable.ic_dialog_email)
         builder.setWhen(System.currentTimeMillis())
-        builder.setContentTitle("Content Title")
-        builder.setContentText("Content Massgae")
+        builder.setAutoCancel(true)
+
+
+
+        // 알림 터치 이벤트 추가
+        val intent = Intent(this, actionActivity::class.java)
+        val pendingIntent = PendingIntent.getActivity(this, 20, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        builder.setContentIntent(pendingIntent)
+
+        // 알림에 액션 추가 네덜란드 유타 레이르담
+        val actionIntent = Intent(this, toastReceiver::class.java)
+        val actionPendingIntent = PendingIntent.getBroadcast(this, 30, actionIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        builder.addAction(NotificationCompat.Action.Builder(
+            0, "취소", actionPendingIntent).build()
+        ).setAutoCancel(true)
+
+        // 원격 입력 액션 추가
+        val KEY_TEXT_REPLY = "key_text_reply"
+        var replyLabel: String = "답장"
+        var remoteInput: RemoteInput = RemoteInput.Builder(KEY_TEXT_REPLY).run{
+            setLabel(replyLabel)
+            build()
+        }
+
+        val replyIntent = Intent(this, ReplyReceiver::class.java)
+        val replyPendingIntent = PendingIntent.getBroadcast(this, 40, replyIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        builder.addAction(
+            NotificationCompat.Action.Builder(0, "답장",
+                replyPendingIntent).addRemoteInput(remoteInput).build()
+        ).setAutoCancel(true)
 
 
         binding.button10.setOnClickListener {
 
-            // 알림 표시
             manager.notify(11, builder.build())
         }
 
-        val manager2 = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-        val builder2: NotificationCompat.Builder
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            val channelId = "two-channel"
-            val channelName = "My second channel"
-            val channel = NotificationChannel(
-                channelId,
-                channelName,
-                NotificationManager.IMPORTANCE_HIGH
-            ).apply{
-                description = "My second channel description"
-            }
-
-            channel.setShowBadge(true)
-
-            val uri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-            val audioAttributes = AudioAttributes.Builder()
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .setUsage(AudioAttributes.USAGE_ALARM)
-                .build()
-
-            channel.setSound(uri, audioAttributes)
-            channel.vibrationPattern = longArrayOf(100, 200, 50, 100)
-
-            manager2.createNotificationChannel(channel)
-
-            builder2 = NotificationCompat.Builder(this, channelId)
-
-        } else {
-            builder2 = NotificationCompat.Builder(this)
-        }
-
-        builder2.setSmallIcon(android.R.drawable.ic_dialog_email)
-        builder2.setWhen(System.currentTimeMillis())
-        builder2.setContentTitle("My notification")
-        builder2.setContentText("I made it!")
+        val bigPicture = BitmapFactory.decodeResource(resources, R.drawable.lion1)
+        val bigStyle = NotificationCompat.BigPictureStyle()
+        bigStyle.bigPicture(bigPicture)
+        builder.setStyle(bigStyle)
 
         binding.button11.setOnClickListener {
-            manager2.notify(12, builder2.build())
+            manager.notify(12, builder.build())
         }
 
 
