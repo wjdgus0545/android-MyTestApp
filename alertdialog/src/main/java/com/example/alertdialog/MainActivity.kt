@@ -21,7 +21,9 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import androidx.core.app.Person
 import androidx.core.app.RemoteInput
+import androidx.core.graphics.drawable.IconCompat
 import com.example.alertdialog.databinding.ActivityMainBinding
 import com.example.alertdialog.databinding.DialogInputBinding
 import kotlin.concurrent.thread
@@ -123,7 +125,6 @@ class MainActivity : AppCompatActivity() {
 
 
         // 알림 빌더 설정
-
         val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         val builder: NotificationCompat.Builder
 
@@ -146,7 +147,6 @@ class MainActivity : AppCompatActivity() {
             builder = NotificationCompat.Builder(this)
         }
 
-
         builder.setContentTitle("Test title")
         builder.setContentText("Test text")
         builder.setSmallIcon(android.R.drawable.ic_dialog_email)
@@ -154,13 +154,13 @@ class MainActivity : AppCompatActivity() {
         builder.setAutoCancel(true)
 
 
-
         // 알림 터치 이벤트 추가
         val intent = Intent(this, actionActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(this, 20, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         builder.setContentIntent(pendingIntent)
 
-        // 알림에 액션 추가 네덜란드 유타 레이르담
+
+        // 알림에 액션 추가
         val actionIntent = Intent(this, toastReceiver::class.java)
         val actionPendingIntent = PendingIntent.getBroadcast(this, 30, actionIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
@@ -168,37 +168,91 @@ class MainActivity : AppCompatActivity() {
             0, "취소", actionPendingIntent).build()
         ).setAutoCancel(true)
 
+
         // 원격 입력 액션 추가
-        val KEY_TEXT_REPLY = "key_text_reply"
-        var replyLabel: String = "답장"
-        var remoteInput: RemoteInput = RemoteInput.Builder(KEY_TEXT_REPLY).run{
-            setLabel(replyLabel)
-            build()
-        }
-
-        val replyIntent = Intent(this, ReplyReceiver::class.java)
-        val replyPendingIntent = PendingIntent.getBroadcast(this, 40, replyIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-
-        builder.addAction(
-            NotificationCompat.Action.Builder(0, "답장",
-                replyPendingIntent).addRemoteInput(remoteInput).build()
-        ).setAutoCancel(true)
-
-
         binding.button10.setOnClickListener {
+            val KEY_TEXT_REPLY = "key_text_reply"
+            var replyLabel: String = "답장"
+            var remoteInput: RemoteInput = RemoteInput.Builder(KEY_TEXT_REPLY).run{
+                setLabel(replyLabel)
+                build()
+            }
 
+            val replyIntent = Intent(this, ReplyReceiver::class.java)
+            val replyPendingIntent = PendingIntent.getBroadcast(this, 40, replyIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+            builder.addAction(
+                NotificationCompat.Action.Builder(0, "답장",
+                    replyPendingIntent).addRemoteInput(remoteInput).build()
+            ).setAutoCancel(true)
             manager.notify(11, builder.build())
         }
 
 
-        val bigPicture = BitmapFactory.decodeResource(resources, R.drawable.lion1)
-        val bigStyle = NotificationCompat.BigPictureStyle()
-        bigStyle.bigPicture(bigPicture)
-        builder.setStyle(bigStyle)
-
+        // 큰 이미지 스타일
         binding.button11.setOnClickListener {
+            val bigPicture = BitmapFactory.decodeResource(resources, R.drawable.lion1)
+            val bigStyle = NotificationCompat.BigPictureStyle()
+            bigStyle.bigPicture(bigPicture)
+            builder.setStyle(bigStyle)
             manager.notify(12, builder.build())
         }
+
+
+        // 긴 텍스트 스타일
+        binding.button12.setOnClickListener {
+            val bigTextStyle = NotificationCompat.BigTextStyle()
+            bigTextStyle.bigText(resources.getString(R.string.long_text))
+            builder.setStyle(bigTextStyle)
+            manager.notify(13, builder.build())
+        }
+
+
+        // 상자 스타일
+        binding.button13.setOnClickListener {
+            val style = NotificationCompat.InboxStyle()
+            style.addLine("1코스 - 수락.불암산코스")
+            style.addLine("2코스 - 용마.아차산코스")
+            style.addLine("3코스 - 고덕.일자산코스")
+            style.addLine("4코스 - 대모.우면산코스")
+            builder.setStyle(style)
+            manager.notify(14, builder.build())
+        }
+
+
+        // 메시지 스타일
+        binding.button14.setOnClickListener {
+            val sender1: Person = Person.Builder()
+                .setName("ohsopp")
+                .setIcon(IconCompat.createWithResource(this, R.drawable.person1))
+                .build()
+
+            val sender2 = Person.Builder()
+                .setName("jeong hyeon")
+                .setIcon(IconCompat.createWithResource(this, R.drawable.person1))
+                .build()
+
+            val message1 = NotificationCompat.MessagingStyle.Message(
+                "hello",
+                System.currentTimeMillis(),
+                sender1
+            )
+
+            val message2 = NotificationCompat.MessagingStyle.Message(
+                "world",
+                System.currentTimeMillis(),
+                sender2
+            )
+
+            val messageStyle = NotificationCompat.MessagingStyle(sender1)
+                .addMessage(message1)
+                .addMessage(message2)
+
+            builder.setStyle(messageStyle)
+
+            manager.notify(15, builder.build())
+        }
+
 
 
         setContentView(binding.root)
