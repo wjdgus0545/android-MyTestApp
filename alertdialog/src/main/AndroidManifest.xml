@@ -14,7 +14,8 @@
         <receiver
             android:name=".ReplyReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true">
+        </receiver>
         <receiver
             android:name=".toastReceiver"
             android:enabled="true"

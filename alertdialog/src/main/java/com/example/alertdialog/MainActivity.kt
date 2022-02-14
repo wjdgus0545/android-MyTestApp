@@ -17,6 +17,8 @@ import android.os.*
 import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -256,6 +258,24 @@ class MainActivity : AppCompatActivity() {
 
 
         setContentView(binding.root)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val menuItem1: MenuItem? = menu?.add(0, 0, 0, "menu1")
+        val menuItem2: MenuItem? = menu?.add(0, 1, 0, "menu2")
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId){
+        0 -> {
+            Toast.makeText(this,"menu1 click", Toast.LENGTH_SHORT).show()
+            true
+        }
+        1 -> {
+            Toast.makeText(this, "menu2 click", Toast.LENGTH_SHORT).show()
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
     }
 
     fun createDialog(){
