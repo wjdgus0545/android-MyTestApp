@@ -11,19 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyTestApp">
-        <receiver
-            android:name=".ReplyReceiver"
-            android:enabled="true"
-            android:exported="true">
-        </receiver>
-        <receiver
-            android:name=".toastReceiver"
-            android:enabled="true"
-            android:exported="true" />
 
-        <activity
-            android:name=".actionActivity"
-            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
