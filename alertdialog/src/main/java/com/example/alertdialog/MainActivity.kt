@@ -4,6 +4,7 @@ import android.os.*
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +14,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.alertdialog.databinding.ActivityMainBinding
 
-class FragmentAdapter(activity: FragmentActivity): FragmentStateAdapter(activity){
+class FragmentAdapter(val activity: FragmentActivity): FragmentStateAdapter(activity){
 
     val fragments = listOf<Fragment>(OneFragment(), TwoFragment(), ThreeFragment())
 
@@ -35,17 +36,26 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
 
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
+
         toggle = ActionBarDrawerToggle(this, binding.drawer, R.string.drawer_opened, R.string.drawer_closed)
 
-        setContentView(binding.root)
-
-        setSupportActionBar(binding.toolbar)
+        binding.viewpager.adapter = FragmentAdapter(this)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toggle.syncState()
 
-        binding.viewpager.adapter = FragmentAdapter(this)
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        if(toggle.onOptionsItemSelected(item)){
+            return true
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -59,19 +69,13 @@ class MainActivity : AppCompatActivity() {
             override fun onQueryTextChange(newText: String?): Boolean {
                 return true
             }
+
             override fun onQueryTextSubmit(query: String?): Boolean {
-                Log.d("ohsopp", "search text : $query")
+                Toast.makeText(applicationContext, "input : $query", Toast.LENGTH_SHORT).show()
                 return true
             }
         })
 
         return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(toggle.onOptionsItemSelected(item)){
-            return true
-        }
-        return super.onOptionsItemSelected(item)
     }
 }

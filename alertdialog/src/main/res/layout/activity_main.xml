@@ -6,7 +6,6 @@
     android:fitsSystemWindows="true">
 
     <LinearLayout
-        android:id="@+id/contentView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -14,23 +13,21 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary" />
+            android:background="?attr/colorPrimary"/>
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
     </LinearLayout>
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="300dp"
         android:layout_height="match_parent"
-        android:text="I am Drawer!!"
+        android:gravity="center_horizontal"
         android:textSize="30sp"
         android:background="#ff0000"
-        android:textColor="#ffffff"
-        android:gravity="center_horizontal"
+        android:text="I am Drawer!!"
+        android:textColor="@color/white"
         android:layout_gravity="start"/>
-
-
 </androidx.drawerlayout.widget.DrawerLayout>

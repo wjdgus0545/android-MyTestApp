@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,12 +24,11 @@ import com.example.alertdialog.databinding.ItemMainBinding
 class MyViewHolder(val binding: ItemMainBinding): RecyclerView.ViewHolder(binding.root)
 
 class MyAdapter(val datas: MutableList<String>): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
-    override fun getItemCount(): Int {
-        return datas.size
-    }
 
+    override fun getItemCount(): Int = datas.size
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return MyViewHolder(ItemMainBinding.inflate(LayoutInflater.from(parent.context),parent, false))
+        return MyViewHolder(ItemMainBinding.inflate(LayoutInflater.from(parent.context),
+        parent, false))
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -36,8 +36,8 @@ class MyAdapter(val datas: MutableList<String>): RecyclerView.Adapter<RecyclerVi
 
         binding.itemText.text = datas[position]
 
-        binding.itemRoot.setOnClickListener {
-            Log.d("ohsopp", "${binding.itemText} is clicked!")
+        binding.itemRoot.setOnClickListener{
+            Log.d("ohsopp", "selected : ${binding.itemText.text}")
         }
     }
 }
@@ -50,14 +50,16 @@ class MyDecoration(val context: Context): RecyclerView.ItemDecoration(){
         val height = parent.height
 
         val dr: Drawable? = ResourcesCompat.getDrawable(context.resources, R.drawable.kbo, null)
-
         val drWidth = dr?.intrinsicWidth
         val drHeight = dr?.intrinsicHeight
 
         val left = width/2 - drWidth?.div(2) as Int
         val top = height/2 - drHeight?.div(2) as Int
+
         c.drawBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.kbo),
-        left.toFloat(), top.toFloat(), null)
+        left.toFloat(),
+        top.toFloat(),
+        null)
     }
 
     override fun getItemOffsets(
@@ -70,14 +72,13 @@ class MyDecoration(val context: Context): RecyclerView.ItemDecoration(){
 
         val index = parent.getChildAdapterPosition(view) + 1
 
-        if (index % 3 == 0)
+        if(index % 3 == 0)
             outRect.set(10, 10, 10, 60)
         else
             outRect.set(10, 10, 10, 10)
 
-        view.setBackgroundColor(Color.parseColor("#28A0FF"))
+        view.setBackgroundColor(Color.parseColor("#28a0ff"))
         ViewCompat.setElevation(view, 20.0f)
-
     }
 }
 
@@ -92,11 +93,10 @@ class OneFragment : Fragment() {
 
         val datas = mutableListOf<String>()
 
-        for(i in 1..10){
+        for (i in 1..10)
             datas.add("item $i")
-        }
 
-        binding.recyclerView.layoutManager = LinearLayoutManager(activity)
+        binding.recyclerView.layoutManager = LinearLayoutManager(inflater.context)
         val adapter = MyAdapter(datas)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.addItemDecoration(MyDecoration(activity as Context))
