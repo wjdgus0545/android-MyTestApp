@@ -6,6 +6,10 @@
         <entry key="..\:/Users/오정현/.gradle/caches/transforms-3/7d41cd8a5d82fd57439fdb8fd3dd7719/transformed/appcompat-1.4.1/res/drawable/abc_edit_text_material.xml" value="0.159" />
         <entry key="..\:/Users/오정현/.gradle/caches/transforms-3/7d41cd8a5d82fd57439fdb8fd3dd7719/transformed/appcompat-1.4.1/res/drawable/abc_ic_menu_paste_mtrl_am_alpha.xml" value="0.159" />
         <entry key="..\:/Users/오정현/AppData/Local/Temp/drawable-temp/fake_of_abc_btn_check_material_anim.xml" value="0.159" />
+        <entry key="..\:/android-sdk/MyTestApp/alertdialog/src/main/res/drawable/button_style.xml" value="0.1" />
+        <entry key="..\:/android-sdk/MyTestApp/alertdialog/src/main/res/drawable/drawer_style.xml" value="0.1" />
+        <entry key="..\:/android-sdk/MyTestApp/alertdialog/src/main/res/drawable/ic_menu_hamburger.xml" value="0.1" />
+        <entry key="..\:/android-sdk/MyTestApp/alertdialog/src/main/res/drawable/three_fragment_style.xml" value="0.1" />
         <entry key="..\:/android-sdk/MyTestApp/alertdialog/src/main/res/layout/activity_action.xml" value="0.25364583333333335" />
         <entry key="..\:/android-sdk/MyTestApp/alertdialog/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/android-sdk/MyTestApp/alertdialog/src/main/res/layout/dialog_input.xml" value="0.1824561403508772" />
@@ -13,8 +17,10 @@
         <entry key="..\:/android-sdk/MyTestApp/alertdialog/src/main/res/layout/fragment_three.xml" value="0.25364583333333335" />
         <entry key="..\:/android-sdk/MyTestApp/alertdialog/src/main/res/layout/fragment_two.xml" value="0.2390625" />
         <entry key="..\:/android-sdk/MyTestApp/alertdialog/src/main/res/layout/item_main.xml" value="0.25364583333333335" />
+        <entry key="..\:/android-sdk/MyTestApp/alertdialog/src/main/res/layout/navigation_header.xml" value="0.2" />
         <entry key="..\:/android-sdk/MyTestApp/alertdialog/src/main/res/menu/menu_action.xml" value="0.25364583333333335" />
         <entry key="..\:/android-sdk/MyTestApp/alertdialog/src/main/res/menu/menu_main.xml" value="0.24974358974358973" />
+        <entry key="..\:/android-sdk/MyTestApp/alertdialog/src/main/res/menu/menu_navigation.xml" value="0.2" />
         <entry key="..\:/android-sdk/MyTestApp/alertdialog/test2/src/main/res/layout/activity_main.xml" value="0.2390625" />
         <entry key="..\:/android-sdk/MyTestApp/app/src/main/res/drawable/gradient_box.xml" value="0.1" />
         <entry key="..\:/android-sdk/MyTestApp/app/src/main/res/drawable/round_button.xml" value="0.1" />
@@ -25,6 +31,11 @@
         <entry key="..\:/android-sdk/MyTestApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="..\:/android-sdk/MyTestApp/mytest3/src/main/res/layout/activity_main.xml" value="0.2324074074074074" />
         <entry key="..\:/android-sdk/platforms/android-32/data/res/drawable/ab_share_pack_material.xml" value="0.159" />
+        <entry key="..\:/android-sdk/platforms/android-32/data/res/drawable/ic_menu.xml" value="0.1" />
+        <entry key="..\:/android-sdk/platforms/android-32/data/res/drawable/ic_menu_cc.xml" value="0.1" />
+        <entry key="..\:/android-sdk/platforms/android-32/data/res/drawable/ic_menu_moreoverflow_material_dark.xml" value="0.1" />
+        <entry key="..\:/android-sdk/platforms/android-32/data/res/drawable/ic_menu_moreoverflow_material_light.xml" value="0.1" />
+        <entry key="..\:/android-sdk/platforms/android-32/data/res/drawable/toast_frame.xml" value="0.1" />
       </map>
     </option>
   </component>

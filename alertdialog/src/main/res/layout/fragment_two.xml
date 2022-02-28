@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_vertical"
-    android:background="@color/purple_500"
+    android:background="@drawable/button_style"
     tools:context=".TwoFragment">
 
     <TextView
@@ -15,6 +15,6 @@
         android:textStyle="bold"
         android:textColor="@color/white"
         android:layout_gravity="center"
-        android:text="@string/hello_blank_fragment" />
+        android:text="Welcome to" />
 
 </LinearLayout>

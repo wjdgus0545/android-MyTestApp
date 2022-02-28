@@ -3,13 +3,22 @@
     android:id="@+id/item_Root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp"
-    android:orientation="vertical">
+    android:background="@drawable/button_style"
+    android:layout_marginTop="10dp"
+    android:padding="9dp"
+    android:orientation="horizontal">
 
+    <ImageView
+        android:id="@+id/item_Image"
+        android:layout_width="40dp"
+        android:layout_height="40dp" />
     <TextView
         android:id="@+id/item_Text"
+        android:layout_marginLeft="20dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textSize="15sp" />
+        android:textSize="17sp" />
 
 </LinearLayout>
