@@ -6,30 +6,39 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appbar"
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+            android:layout_height="match_parent">
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appbar"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                app:title="Ohsopp's application"
-                app:subtitle="hello.."
-                app:subtitleTextAppearance="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
-                android:background="@drawable/cover" />
-        </com.google.android.material.appbar.AppBarLayout>
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        app:layout_scrollFlags="scroll|enterAlways"
+                        android:background="@drawable/andro"
+                        app:title="Ohsopp's app"
+                        app:subtitle="hello.."
+                        app:subtitleTextAppearance="@style/Theme.MaterialComponents.DayNight.DarkActionBar" />
+
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
     </LinearLayout>
 
 
