@@ -1,11 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:title="item 1"/>
-    <item
-        android:title="item 2"/>
-    <item
-        android:title="item 3"/>
+
+    <item android:title="아무거나">
+        <menu>
+        </menu>
+    </item>
+
+    <group
+        android:checkableBehavior="single">
+            <item
+                android:title="오 오 오"
+                android:icon="@drawable/ic_camera"/>
+            <item
+                android:title="정 정 정"
+                android:icon="@drawable/ic_location"/>
+            <item
+                android:title="현 현 현"
+                android:icon="@drawable/ic_fingerprint"/>
+    </group>
+
+    <item android:title="설정">
+        <menu>
+            <item
+                android:icon="@drawable/ic_setting"
+                android:title="설정"/>
+        </menu>
+    </item>
+
+
 
 </menu>
