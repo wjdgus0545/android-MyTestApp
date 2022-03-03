@@ -2,22 +2,27 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:title="아무거나">
+    <item android:title="NULL">
         <menu>
         </menu>
     </item>
 
     <group
         android:checkableBehavior="single">
-            <item
-                android:title="오 오 오"
-                android:icon="@drawable/ic_camera"/>
-            <item
-                android:title="정 정 정"
-                android:icon="@drawable/ic_location"/>
-            <item
-                android:title="현 현 현"
-                android:icon="@drawable/ic_fingerprint"/>
+        <item android:title="아무거나">
+            <menu>
+                <item
+                    android:title="오 오 오"
+                    android:icon="@drawable/ic_camera"/>
+                <item
+                    android:title="정 정 정"
+                    android:icon="@drawable/ic_location"/>
+                <item
+                    android:title="현 현 현"
+                    android:icon="@drawable/ic_fingerprint"/>
+            </menu>
+        </item>
+
     </group>
 
     <item android:title="설정">
