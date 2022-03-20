@@ -49,24 +49,7 @@ class MyAdapter(val datas: MutableList<Profiles>): RecyclerView.Adapter<Recycler
 }
 
 class MyDecoration(val context: Context): RecyclerView.ItemDecoration(){
-    override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
-        super.onDrawOver(c, parent, state)
 
-        val width = parent.width
-        val height = parent.height
-
-        val dr: Drawable? = ResourcesCompat.getDrawable(context.resources, R.drawable.kbo, null)
-        val drWidth = dr?.intrinsicWidth
-        val drHeight = dr?.intrinsicHeight
-
-        val left = width/2 - drWidth?.div(2) as Int
-        val top = height/2 - drHeight?.div(2) as Int
-
-        c.drawBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.kbo),
-        left.toFloat(),
-        top.toFloat(),
-        null)
-    }
 
     override fun getItemOffsets(
         outRect: Rect,
